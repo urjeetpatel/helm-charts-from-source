@@ -25,16 +25,16 @@ jobs:
       - name: dbg run ls
         run: ls -la && pwd
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
+      #- name: Run chart-testing (list-changed)
+      #  id: list-changed
+      #  run: |
+      #    changed=$(ct list-changed)
+      #    if [[ -n "$changed" ]]; then
+      #      echo "::set-output name=changed::true"
+      #    fi
 
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --all
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.0.0

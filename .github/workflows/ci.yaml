@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Set up Helm
@@ -22,17 +22,19 @@ jobs:
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.0.1
+      - name: dbg run ls
+        run: ls -la && pwd
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
+      #- name: Run chart-testing (list-changed)
+      #  id: list-changed
+      #  run: |
+      #    changed=$(ct list-changed)
+      #    if [[ -n "$changed" ]]; then
+      #      echo "::set-output name=changed::true"
+      #    fi
 
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --all
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.0.0
